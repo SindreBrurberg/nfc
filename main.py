@@ -20,19 +20,34 @@ curses.curs_set(0)
 screen.keypad(1)
 curses.mousemask(1)
 
-def q():
+width, heigth = screen.getmaxyx()
+
+def polserf():
     quit()
 
-b = Button(screen, "test", q, 1, 1, 15)
+buttonWin = curses.newwin(15, width, 5, 0)
+polser = Button(buttonWin, "polser", polserf, 0, 0)
+vafler = Button(buttonWin, "vafler", polserf, polser.nextPropper(), 0, bottom = False)
+brus = Button(buttonWin, "brus", polserf, polser.nextPropper(), polser.under(), width = vafler.width(), bottom = False)
+mat = Button(buttonWin, "mat", polserf, 0, polser.under(), width=polser.width(), bottom = False)
+buttns = [polser, vafler, brus, mat]
+screens = [screen, buttonWin]
+
+def userInfo():
+    return ("Sindre Brurberg", 2, 2, 6, 0)
+
 def draw():
-    b.draw()
-    screen.refresh()
+    for b in buttns:
+        b.draw()
+    for s in screens:
+        s.refresh()
 
 def uppdate():
     ch = screen.getch()
     if ch == curses.KEY_MOUSE:
         (_,x,y,_,_) = curses.getmouse()
-        b.uppdate(x,y)
+        for b in buttns:
+            b.uppdate(x,y)
 
 def main():
     height, width = screen.getmaxyx()
