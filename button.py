@@ -22,10 +22,13 @@ class Button:
         self._shorter = shorter
         self._bottom = bottom
 
-    def uppdate(self, x, y):
+    def uppdate(self, x, y, usr = None):
         if (x >= self._x and x <= (self._x + self._width) and
                 y >= self._y and y <= (self._y + self._height)):
-            self._func()
+            if usr == None:
+                self._func()
+            else:
+                self._func(usr)
 
     def propper(self):
         if (self._width - self._extra >= len(self._txt) or self._width - self._extra >= self._min):
