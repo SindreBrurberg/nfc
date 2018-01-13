@@ -6,12 +6,12 @@ class Button:
         self._x = x
         self._y = y
         self._extra = marg * 2 + bord * 2 + pad * 2
-        if width == 0:
+        self._min = self._extra + short
+        if width == 0 or width < self._min:
             self._width = self._extra + len(txt)
         else:
             self._width = width
         self._height = self._extra + 1
-        self._min = self._extra + short
         self._marg = marg
         self._bord = bord
         self._pad = pad
@@ -60,12 +60,7 @@ class Button:
         return self._extra + 1
 
     def draw(self):
-        leng = self._min
-        if self.propper():
-            leng = self._width
-        else:
-            self._width = leng
-
+        leng = self._width
         text = self._txt
         if len(text) > leng - self._extra:
             text = text[:leng - self._extra - self._short] + self._shorter * self._short
