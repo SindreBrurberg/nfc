@@ -7,10 +7,13 @@ class Button:
         self._y = y
         self._extra = marg * 2 + bord * 2 + pad * 2
         self._min = self._extra + short
-        if width == 0 or width < self._min:
+        if width == 0:
             self._width = self._extra + len(txt)
         else:
-            self._width = width
+            if width < self._min:
+                self._width = self._min
+            else:
+                self._width = width
         self._height = self._extra + 1
         self._marg = marg
         self._bord = bord
@@ -30,8 +33,11 @@ class Button:
             else:
                 self._func(usr)
 
-    def propper(self):
-        if (self._width - self._extra >= len(self._txt) or self._width - self._extra >= self._min):
+    def propper(self, num = False):
+        prop = len(self._txt) + self._extra
+        if num:
+            return prop
+        if (self._width >= prop):
             return True
         return False
 
@@ -50,14 +56,25 @@ class Button:
     def nextPropper(self):
         return self._x + self._width
 
-    def width(self, width=None):
-        if width == None:
+    def width(self, width=None, propper=False):
+        if width == None and not propper:
             return self._width
         else:
-            self._width = width
+            if propper:
+                if width != None:
+                    self._width = width
+                if not self.propper():
+                    self._width = self._extra + len(self._txt)
+            else:
+                if width < self._min:
+                    self._width = self._min
+                else:
+                    self._width = width
 
     def height(self):
-        return self._extra + 1
+        if self._bottom:
+            return self._extra + 1
+        return self._extra
 
     def draw(self):
         leng = self._width
@@ -80,5 +97,5 @@ class Button:
         y = self.prt(1, txt, self._x, y)
         y = self.prt(self._pad, pa, self._x, y)
         y = self.prt(self._bord, bor, self._x, y)
-        if self._border:
+        if self._bottom:
             y = self.prt(self._marg -1, mar, self._x, y)
