@@ -2,6 +2,3 @@ notifications:
     email: false
 language: python
 script: python -m unittest discover
-branches:
-  except:
-      master
