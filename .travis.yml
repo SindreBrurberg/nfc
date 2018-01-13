@@ -3,5 +3,5 @@ notifications:
 language: python
 script: python -m unittest discover
 branches:
-  only:
+  except:
       master
