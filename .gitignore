@@ -1,2 +1,5 @@
 *.swp
 __pycache__
+MFRC522-python
+pi-rc522
+SPI-Py
